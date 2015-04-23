@@ -34,10 +34,13 @@ class Mario(Creature):
             self.y+=self.vy
         else:
             self.vy=0
+    
         if self.Keys[RIGHT]:
             self.vx=1
         elif self.Keys[LEFT]:
             self.vx=-1
+        else:
+            self.vx=0
 
         self.x += self.vx
         
