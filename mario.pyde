@@ -8,7 +8,7 @@ class Game:
         line(0,self.g,self.w, self.g)
             
 class Creature:
-    def __init__(self,x,y,r,g,rImg,rF):
+    def __init__(self,x,y,r,g,sImg,rImg,rF):
         self.x=x
         self.y=y
         self.r=r
@@ -16,8 +16,10 @@ class Creature:
         self.vx=0
         self.vy=0
         self.rImg=loadImage(rImg)
+        self.sImg=loadImage(sImg)
         self.f=0
         self.rF=rF
+        self.dir=1
         
     def display(self):
         self.update()
@@ -30,11 +32,17 @@ class Creature:
             image(self.rImg,self.x-self.r,self.y-self.r,60,78,int(self.f)*60,0,int(self.f)*60+60,78)
         elif self.vx<0:
             image(self.rImg,self.x-self.r,self.y-self.r,60,78,int(self.f)*60+60,0,int(self.f)*60,78)
+        else:
+            if self.dir>0:
+                image(self.sImg,self.x-self.r,self.y-self.r)
+            else:
+                image(self.sImg,self.x-self.r,self.y-self.r,60,78,60,0,0,78)
 class Mario(Creature):
-    def __init__(self,x,y,r,g,rImg,rF):
-        Creature.__init__(self,x,y,r,g,rImg,rF)
+    def __init__(self,x,y,r,g,sImg,rImg,rF):
+        Creature.__init__(self,x,y,r,g,sImg,rImg,rF)
         self.Keys={UP:False,LEFT:False,RIGHT:False}
         self.img=loadImage(rImg)
+
     def update(self):
         if self.y+self.r < self.g:
             self.vy+=0.1
@@ -49,15 +57,19 @@ class Mario(Creature):
         
         elif self.Keys[LEFT]:
             self.vx=-1
+            self.dir=-1
+            
         elif self.Keys[RIGHT]:
             self.vx=1
+            self.dir=1
         else:
             self.vx=0
+
 
         self.x += self.vx
         
 game = Game(800,600,500)
-mario = Mario(50,100,39,game.g,'images/marioRun.png',4)
+mario = Mario(50,100,39,game.g,'images/marioStand.png','images/marioRun.png',4)
 
 def setup():
     size(game.w, game.h)
