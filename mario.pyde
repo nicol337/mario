@@ -34,10 +34,13 @@ class Mario(Creature):
             self.y+=self.vy
         else:
             self.vy=0
+        if self.Keys[RIGHT]:
+            self.vx=1
+        elif self.Keys[LEFT]:
+            self.vx=-1
 
-
-
-
+        self.x += self.vx
+        
 game = Game(800,600,500)
 mario = Mario(50,400,10,game.g)
 
@@ -55,5 +58,6 @@ def keyPressed():
     mario.Keys[keyCode]=True
 
 def keyReleased():
+    print('released',keyCode)
     mario.Keys[keyCode]=False
     
